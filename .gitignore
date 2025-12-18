@@ -1,6 +1,7 @@
 __pycache__/
 *.py[cod]
 *.pyo
+*.egg-info/
 
 .venv/
 venv/
@@ -9,6 +10,7 @@ build/
 dist/
 
 .idea/
+.vscode/
 
 .DS_Store
 Thumbs.db

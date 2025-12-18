@@ -1,14 +1,14 @@
 field = [['-' for j in range(3)] for i in range(3)]
 
 
-# Вывод стартового поля
+# Print initial game board
 def start_field():
     for n in field:
         print(*n)
     print('---------------------------')
 
 
-# Смена игрока
+# Player switch generator
 def change_player():
     n = 0
     while True:
@@ -21,7 +21,7 @@ def change_player():
         yield player
 
 
-# Ход
+# Player move input
 def my_input(player):
     print(f"Ход игрока {player}")
     print('---------------------------')
@@ -49,7 +49,7 @@ def my_input(player):
         yield x, y
 
 
-# Провекра корректности хода
+# Validate move
 def check(next_move, player):
     move = field[next_move[0] - 1][next_move[1] - 1]
     if move == '-':
@@ -70,13 +70,13 @@ def check(next_move, player):
         return fix
 
 
-# Вывод поля после хода
+# Update and print game board after move
 def output_field(next_move, move):
     field[next_move[0] - 1][next_move[1] - 1] = move
     start_field()
 
 
-# Проверка результат
+# Check game result
 def check_result(player):
     i = 0
     j = 0
@@ -108,7 +108,7 @@ def check_result(player):
         print('Ничья')
         return 'Никто не'
 
-# wrapper
+# Game wrapper
 def game(func):
     def wrapper():
         print("Поле")
@@ -121,7 +121,7 @@ def game(func):
     return wrapper
 
 
-# Основной цикл
+# Main game loop
 @game
 def main_play():
     val = change_player()  # получаем значение для игрока
@@ -135,5 +135,9 @@ def main_play():
     return result
 
 
-# Игра
-main_play()
+# Start game
+def run_game():
+    main_play()
+
+if __name__ == "__main__":
+    run_game()

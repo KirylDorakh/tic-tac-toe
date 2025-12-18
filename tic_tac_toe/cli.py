@@ -1,4 +1,4 @@
-from game import run_game
+from .game import run_game
 
 def main() -> None:
     run_game()
