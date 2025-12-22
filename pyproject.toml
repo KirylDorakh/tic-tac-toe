@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tic-tac-toe-kiryl"
+version = "1.0.0"
+description = "A simple terminal Tic-Tac-Toe game written in Python."
+requires-python = ">=3.9"
+
+[project.scripts]
+tictactoe = "tic_tac_toe.cli:main"

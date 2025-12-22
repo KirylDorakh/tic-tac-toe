@@ -23,29 +23,29 @@ def change_player():
 
 # Player move input
 def my_input(player):
-    print(f"Ход игрока {player}")
+    print(f"Player {player}'s turn")
     print('---------------------------')
     x = 0
     y = 0
     while True:
         while not (1 <= x <= 3):
             try:
-                x = int(input('Выберете строку от 1 до 3:'))
+                x = int(input('Choose a row (1 to 3): '))
                 if not (1 <= x <= 3):
                     raise ValueError
             except ValueError:
-                print("Введено неверное значение")
+                print("Invalid input")
             else:
-                print(f"Вы ввели значение {x}")
+                print(f"You selected row {x}")
         while not (1 <= y <= 3):
             try:
-                y = int(input('Выберете столбец от 1 до 3:'))
+                y = int(input('Choose a column (1 to 3): '))
                 if not (1 <= x <= 3):
                     raise ValueError
             except ValueError:
-                print("Введено неверное значение")
+                print("Invalid input")
             else:
-                print(f"Вы ввели значение {y}")
+                print(f"You selected column {y}")
         yield x, y
 
 
@@ -54,16 +54,16 @@ def check(next_move, player):
     move = field[next_move[0] - 1][next_move[1] - 1]
     if move == '-':
         print('---------------------------')
-        print(f'Клетка {next_move} свободна')
-        print('Ход разрешен')
+        print(f'Cell {next_move} is free')
+        print('Move allowed')
         print('---------------------------')
         move = player
         return next_move, move
     elif move != '-':
         print('---------------------------')
-        print(f'Клетка {next_move} занята!!!')
-        print('Ход запрещен!!!')
-        print('Попробуйте еще раз!!!')
+        print(f'Cell {next_move} is already occupied!')
+        print('Move not allowed!')
+        print('Please try again')
         print('---------------------------')
         next_move = next(my_input(player))
         fix = check(next_move, player)
@@ -83,12 +83,12 @@ def check_result(player):
     n = 0
     if field[i][i] == field[i + 1][i + 1] == field[i + 2][i + 2] == player:
         print('---------------------------')
-        print(f'3 "{player}" по диагонали')
+        print(f'3 "{player}" on the main diagonal')
         return player
 
     if field[i + 2][i] == field[i + 1][i + 1] == field[i][i + 2] == player:
         print('---------------------------')
-        print(f'3 "{player}" по диагонали')
+        print(f'3 "{player}" on the secondary diagonal')
         return player
 
     for i in range(3):
@@ -96,27 +96,27 @@ def check_result(player):
             n += 1
         if field[i][j] == field[i][j + 1] == field[i][j + 2] == player:
             print('---------------------------')
-            print(f'3 "{player}" по строке {i + 1}')
+            print(f'3 "{player}" in row {i + 1}')
             return player
         if field[j][i] == field[j + 1][i] == field[j + 2][i] == player:
             print('---------------------------')
-            print(f'3 "{player}" по столбцу {i + 1}')
+            print(f'3 "{player}" in column {i + 1}')
             return player
 
     if n == 3:
         print('---------------------------')
-        print('Ничья')
-        return 'Никто не'
+        print('Draw')
+        return 'No one'
 
 # Game wrapper
 def game(func):
     def wrapper():
-        print("Поле")
+        print("Game board")
         start_field()
-        print(f'{func()} выйграл!!!')
-        print("Игра окончена")
-        # для 3t.exe
-        input('Нажмите любую клавишу для выхода')
+        print(f'{func()} won!')
+        print("Game over")
+        # Pause for executable version
+        input('Press Enter to exit')
 
     return wrapper
 
@@ -124,11 +124,11 @@ def game(func):
 # Main game loop
 @game
 def main_play():
-    val = change_player()  # получаем значение для игрока
+    val = change_player()
     result = None
     while not result:
-        player = next(val)  # переменная для игрока
-        next_move = next(my_input(player))  # вызов хода
+        player = next(val)
+        next_move = next(my_input(player))
         check_next_move = check(next_move, player)
         output_field(*check_next_move)
         result = check_result(player)
